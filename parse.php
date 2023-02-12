@@ -1,8 +1,9 @@
 <?php
 /*
-Viktor Kubec, xkubec03, 2BIT, 2022
-Parser of IPPcode22
+Viktor Kubec, xkubec03, 3BIT, 2023
+Parser of IPPcode23
 Used plain PHP and for XML generation used XMLWriter
+Reused my code from last year and updated it.
 */
 
 //Assignment specificly said we need this, so I included it.
@@ -98,11 +99,11 @@ do
 
 //Once we find first line, that is not starting by # (comment), we replace any comments that could be anywhere else on this line.
 $cur_line = preg_replace('/(\#.*)/', '', $cur_line);
-//Trim whitespaces and convert the string to lower case, since the header .IPPcode22 is case insensitive. 
+//Trim whitespaces and convert the string to lower case, since the header .IPPcode23 is case insensitive. 
 //If the line we read is not the header, the program is terminated with exit code 21.
-if (strtolower(trim($cur_line)) !== ".ippcode22") 
+if (strtolower(trim($cur_line)) !== ".ippcode23") 
 {
-    fprintf(STDERR, "Required program header .IPPcode22 was not found in source code. Program shutting down.\n");
+    fprintf(STDERR, "Required program header .IPPcode23 was not found in source code. Program shutting down.\n");
     exit(ERR_BAD_HEADER);
 }
 
@@ -124,11 +125,11 @@ if(!$set_indent_res)
     exit(ERR_INTERNAL);
 }
 //Creating XML header and the main program element with language attribute.
-//Rest of the XML will be created by the main part of program, once the individual lines of IPPcode22 are checked.
+//Rest of the XML will be created by the main part of program, once the individual lines of IPPcode23 are checked.
 xmlwriter_start_document($new_xml_writer, '1.0', 'UTF-8');
 xmlwriter_start_element($new_xml_writer, 'program');
 xmlwriter_start_attribute($new_xml_writer, 'language');
-xmlwriter_text($new_xml_writer, 'IPPcode22');
+xmlwriter_text($new_xml_writer, 'IPPcode23');
 xmlwriter_end_attribute($new_xml_writer);
 
 //Function checks current instruction. Args of function -> $instruction holds instruction name, $arguments array of instruction arguments.
@@ -284,11 +285,11 @@ while($cur_proccessed_line = fgets(STDIN))
     $line_no_comment = preg_replace('/(\#.*)/',' ',$cur_proccessed_line);
     //Removing whitespaces from current line.
     $clean_line = trim($line_no_comment);
-    //If we find another .IPPcode22 header here, we terminate the program, since this a mistake.
+    //If we find another .IPPcode23 header here, we terminate the program, since this a mistake.
     //Program is terminated with exit code 21.
-    if(strtolower($clean_line) === ".ippcode22")
+    if(strtolower($clean_line) === ".ippcode23")
     {
-        fprintf(STDERR, "Found another .IPPcode22 header in source code. Program is shutting down.\n");
+        fprintf(STDERR, "Found another .IPPcode23 header in source code. Program is shutting down.\n");
         exit(ERR_BAD_SOURCE_CODE);
     }
     //Proccessing only non-empty lines, of course.
